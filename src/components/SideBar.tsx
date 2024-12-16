@@ -9,11 +9,11 @@ export default function SideBar({
   marginLeft: string;
 }) {
   const todoList = useTodoStore((state) => state.todoList);
-  const addTodo = useTodoStore((state) => state.addTodo);
-  const openTodo = useTodoStore((state) => state.openTodo);
+  const addTodo = useTodoStore((state) => state.newTodo);
+  const loadTodo = useTodoStore((state) => state.loadTodo);
 
-  const loadTodo = (indx: number) => {
-    openTodo(indx);
+  const openTodo = (indx: number) => {
+    loadTodo(indx);
   };
 
   const add = () => {
@@ -26,19 +26,12 @@ export default function SideBar({
 
   const items = todoList.map((todo, indx) => {
     return (
-      <div key={indx} onClick={() => loadTodo(indx)}>
-        ID:
-        <br /> {todo.id}
-        <br />
-        <br />
-        Title:
-        <br />
+      <div
+        key={indx}
+        onClick={() => openTodo(indx)}
+        style={{ cursor: "pointer" }}
+      >
         {todo.title}
-        <br />
-        <br />
-        Content:
-        <br />
-        {todo.content}
         <hr />
       </div>
     );
@@ -48,8 +41,18 @@ export default function SideBar({
     <motion.div
       className="SideBar"
       animate={{ width: sideBarWidth, marginLeft: marginLeft }}
+      style={{ padding: "20px" }}
     >
-      <button onClick={add}>Add Todo</button>
+      <button
+        onClick={add}
+        style={{
+          marginBottom: "25px",
+          marginRight: "auto",
+          marginLeft: "auto",
+        }}
+      >
+        Add Todo
+      </button>
       {items}
     </motion.div>
   );
